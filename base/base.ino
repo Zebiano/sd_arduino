@@ -1,13 +1,15 @@
 // Variables
 int delayValue = 500;
+int arduinoState = 0;
 
 void setup() {
   Serial.begin(9600);
-  
-  pinMode(8, INPUT);
-  pinMode(9, INPUT);
-  pinMode(10, INPUT);
-  pinMode(11, INPUT);
+
+  pinMode(2, INPUT); // Capacative Touch Sensor
+  pinMode(8, INPUT); // Button Carne
+  pinMode(9, INPUT); // Button Peixe
+  pinMode(10, INPUT); // Button Vegetariano
+  pinMode(11, INPUT); // Button Dieta
   
   digitalWrite(8, HIGH);
   digitalWrite(9, HIGH);
@@ -16,7 +18,16 @@ void setup() {
 }
 
 void loop() {
-  if (!digitalRead(8)) {
+  if (digitalRead(2) == HIGH && arduinoState == 0) {
+    Serial.println("Changing state to 1!");
+    changeState(1);
+  } else if (digitalRead(2) == HIGH && arduinoState == 1) {
+    Serial.println("Changing state to 0!");
+     changeState(0);
+  }
+  
+  if (arduinoState == 1) {
+    if (!digitalRead(8)) {
     sendMeat();
   } else if (!digitalRead(9)) {
     sendFish();
@@ -24,24 +35,43 @@ void loop() {
     sendVegetarian();
   } else if (!digitalRead(11)) {
     sendDiet();
+  } 
   }
 }
 
+// Change the state of the arduino
+int changeState(int state) {
+  arduinoState = state;
+
+  if (state == 1) {
+    Serial.println("Arduino is now awake!");
+  } else {
+    Serial.println("Arduino went to sleep!");
+  }
+
+delay(delayValue);
+  return arduinoState;
+}
+
+// Sends "0" through Serial
 void sendMeat() {
   Serial.println(0);
   delay(delayValue);
 }
 
+// Sends "1" through Serial
 void sendFish() {
   Serial.println(1);
   delay(delayValue);
 }
 
+// Sends "2" through Serial
 void sendVegetarian() {
   Serial.println(2);
   delay(delayValue);
 }
 
+// Sends "3" through Serial
 void sendDiet() {
   Serial.println(3);
   delay(delayValue);
