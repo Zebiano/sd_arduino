@@ -18,6 +18,7 @@ void setup() {
 }
 
 void loop() {
+  // Change Arduino state
   if (digitalRead(2) == HIGH && arduinoState == 0) {
     Serial.println("Changing state to 1!");
     changeState(1);
@@ -25,7 +26,8 @@ void loop() {
     Serial.println("Changing state to 0!");
      changeState(0);
   }
-  
+
+  // If arduino is "awake", let buttons send data
   if (arduinoState == 1) {
     if (!digitalRead(8)) {
     sendMeat();
@@ -36,6 +38,11 @@ void loop() {
   } else if (!digitalRead(11)) {
     sendDiet();
   } 
+  // If buttons are pressed but the arduino is asleep
+  } else if (!digitalRead(9) || !digitalRead(10) || !digitalRead(11) || !digitalRead(12)) {
+    if (arduinoState == 0) {
+      Serial.println("Wake up the Arduino to be able to save data to the server!");
+    }
   }
 }
 
@@ -46,10 +53,10 @@ int changeState(int state) {
   if (state == 1) {
     Serial.println("Arduino is now awake!");
   } else {
-    Serial.println("Arduino went to sleep!");
+    Serial.println("Arduino went to sleep...");
   }
 
-delay(delayValue);
+  delay(delayValue);
   return arduinoState;
 }
 
