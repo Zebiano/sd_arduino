@@ -4,7 +4,7 @@ const Readline = require('@serialport/parser-readline');
 const parser = new Readline();
 
 // Variables
-const comPort = "COM7";
+const comPort = "COM3";
 const baudRate = 9600;
 
 // new SerialPort Object
