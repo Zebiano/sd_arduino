@@ -60,7 +60,7 @@ function axiosGetToken() {
 function axiosPost(type) {
     let today = new Date();
     let dd = today.getDate();
-    let mm = today.getMonth();
+    let mm = today.getMonth() + 1;
     let yyyy = today.getFullYear();
     if (dd < 10) {
         dd = '0' + dd;
