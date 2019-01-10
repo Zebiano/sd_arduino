@@ -11,9 +11,8 @@ axios.defaults.headers.common['Authorization'] = 'Bearer ' + token // for all re
 
 // Switches the port into "flowing mode"
 connect.parser.on('data', function (data) {
-    let res = parseInt(data);
-    console.log(data);
-    //console.log(typeof res);
+    //console.log(data);
+    //console.log(typeof data);
 
     if (res == "0") {
         console.log("Recieved Meat");

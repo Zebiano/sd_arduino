@@ -27,14 +27,9 @@ void loop() {
      changeState(0);
   }
 
-  if (!digitalRead(9)) {
-    Serial.println("Putaaaaaa");
-  }
-
   // If arduino is "awake", let buttons send data
   if (arduinoState == 1) {
     if (!digitalRead(8)) {
-      Serial.println("What?");
     sendMeat();
   } else if (!digitalRead(9)) {
     sendFish();
@@ -47,6 +42,7 @@ void loop() {
   } else if (arduinoState == 0) {
     if (!digitalRead(8) || !digitalRead(9) || !digitalRead(10) || !digitalRead(11)) {
       Serial.println("Wake up the Arduino to be able to save data to the server!");
+      delay(delayValue);
     }
   }
 }
