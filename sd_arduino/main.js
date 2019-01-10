@@ -1,6 +1,7 @@
 // Requires
 const connect = require('./assets/connect.js');
 const axios = require('axios');
+const colors = require('colors');
 
 // Variables
 const baseUrl = "https://projeto-sd-zebiano.c9users.io/";
@@ -14,17 +15,30 @@ connect.parser.on('data', function (data) {
     //console.log(data);
     //console.log(typeof data);
 
+    if (data == 0 || data == 1 || data == 2 || data == 3) {
+        /**
+         * Tive que fazer assim porque pelos vistos dizer que
+         * (data == 0) funciona, mas (data != 0) ja nao funciona...         * 
+        */
+    } else {
+        console.log(data);
+    }
+
+    // Change value arduino sends to Int
+    let res = parseInt(data);
+    //console.log(typeof res);
+
     if (res == "0") {
-        console.log("Recieved Meat");
+        //console.log("Recieved Meat");
         axiosPost("Carne");
     } else if (res == "1") {
-        console.log("Recieved Fish");
+        //console.log("Recieved Fish");
         axiosPost("Peixe");
     } else if (res == "2") {
-        console.log("Recieved Vegetarian");
+        //console.log("Recieved Vegetarian");
         axiosPost("Vegetariano");
     } else if (res == "3") {
-        console.log("Recieved Diet");
+        //console.log("Recieved Diet");
         axiosPost("Dieta");
     }
 });
@@ -64,7 +78,7 @@ function axiosPost(type) {
         type: type
     })
         .then(function (res) {
-            console.log(res.data);
+            console.log(colors.blue("BD: ") + res.data + "! Added " + type + ".");
         })
         .catch(function (err) {
             console.log(err);
