@@ -78,7 +78,7 @@ function axiosPost(type) {
         type: type
     })
         .then(function (res) {
-            console.log(colors.blue("BD: ") + res.data + "! Added " + type + ".");
+            console.log(colors.blue("BD: ") + res.data + " Added " + type + ".");
         })
         .catch(function (err) {
             console.log(err);
